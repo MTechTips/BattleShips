@@ -4,6 +4,8 @@ root = Tk()
 board = []
 buttons = []
 global gamestate
+click = False
+placedships = False
 for n in range (0,100):
     board.append(0)
 def board_create():
@@ -13,7 +15,7 @@ def board_create():
     n = 0
     for space in board:
         if space == 0:
-            button = Button(root,text="     ", command=lambda n=n: shootandplace(n))     #under construction
+            button = Button(root,text="     ", command=lambda n=n: shootandplace(n))
             button.grid(row=y, column=x)
             buttons.append(button)
         else:
@@ -27,13 +29,28 @@ def board_create():
         n = n + 1
         create_space = Label(root, text=" ")
         create_space.grid(row=19, column=0)
-        game_state = Label(root, text=gamestate)
+        game_state = Label(root, text=state_change())
         game_state.place(x=0,y=260)
 def state_change():
-    global gamestate
     gamestate="change later"
+    return gamestate
 def shootandplace(position):
-    if placedships==false:
+    if placedships==False:
         place_ships(position)
-    shoot(position)
+    if placedships==True:
+        makearray(position)
+def place_ships(pos):
+    global click
+    
+def shoot(pos):
+    pass
+def mode():
+    pass
+def datacollect():
+    global mode
+    global click
+    global position
+    onbuttonpress(mode,click,position)
+def onbuttonpress():
+    pass
 board_create()
