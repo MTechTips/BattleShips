@@ -1,18 +1,10 @@
-#import sqlite3
-#from tkinter import *
+import sqlite3
+from tkinter import *
 
-occupied = [[39,False], [1,True]]
-
-def shoot(occupied):
+def shoot(ships,position):
     global button
-    button_val = input("Move ")
-    button_val == occupied.index
-    if button_val == occupied:
-        print("hit")
-        #return X
-    else:
-        print("miss")
-        #return O
-shoot(occupied)    
+    if button #retrive data from the database so that it can tell if it can find the ship postitions
+    
+    
 ## miss = databse value false
 ## hit = databse value true
