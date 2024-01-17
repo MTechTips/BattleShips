@@ -2,7 +2,8 @@ import tkinter as tk
 import socket
 import threading
 from time import sleep
-
+import os
+import sqlite3
 
 window = tk.Tk()
 window.title("Sever")
@@ -43,7 +44,7 @@ clientFrame.pack(side=tk.BOTTOM, pady=(5, 10))
 
 
 server = None
-HOST_ADDR = "192.168.1.8"
+HOST_ADDR = "0.0.0.0"
 HOST_PORT = 8080
 client_name = " "
 clients = []
@@ -68,6 +69,10 @@ def start_server():
 
     lblHost["text"] = "Address: " + HOST_ADDR
     lblPort["text"] = "Port: " + str(HOST_PORT)
+    
+    connection = sqlite3.connect("ships.db")
+    cursor = connection.cursor()
+    cursor.execute("CREATE TABLE ships(x,y,afloat,player)")
 
 
 # Stop server function
@@ -76,7 +81,7 @@ def stop_server():
     server.close()
     btnStart.config(state=tk.NORMAL)
     btnStop.config(state=tk.DISABLED)
-
+    os.remove("ships.db")
 
 def accept_clients(the_server, y):
     while True:
