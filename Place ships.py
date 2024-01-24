@@ -13,9 +13,10 @@ def makearray(position): #called from when need to shoot.
 
 def onbuttonpress(mode,click,position):
     if mode == "place":
-        valid_move_check(click,position)
+        start_pos, end_pos = valid_move_check(click,position)
     if mode == "attack":
         makearray(position)
+    return start_pos, end_pos
 
 def valid_move_check(click,position):
     #makeboard()
@@ -24,8 +25,8 @@ def valid_move_check(click,position):
     #click is the 1 or 2 to denote if it's first or second time clicked
     row = str(position)[0:1]
     column = str(position)[1:2]
-    print(row)
-    print(column)
+    print("Row:",row)
+    print("Column:",column)
 
     ship5 = 1 #ship5[0] = count of how many of that type left, ship5[1] = length of ship
     ship4 = 1
@@ -34,7 +35,8 @@ def valid_move_check(click,position):
     
     hori_possible_area = []
     vert_possible_area = []
-    
+    end_pos=False
+    start_pos = False
     if click == False: #1st click
         start_pos = position
         '''for n in range [2,6]:
@@ -52,7 +54,12 @@ def valid_move_check(click,position):
                 print("Not in same row or off board")
             
             verta1 = position+10 #ALL OF THESE ARE NOT RIGHT
-            vertm1 = position-10 
+            vertm1 = position-10
+            if vertm1 < 10 and vertm1 <= 0:
+                if str(vertm1) == str(position)[1:2]:
+                   vert_possible_area.append(vertm1)
+                else:
+                    print("something went wrong with vertm1. Coordinate:",vertm1)
             if str(verta1)[1:2] == str(position)[1:2] and verta1<99:
                 vert_possible_area.append(verta1)
             if str(vertm1)[1:2] == str(position)[1:2] and vertm1>0:
@@ -69,8 +76,13 @@ def valid_move_check(click,position):
             else:
                 print("Not in same row or off board")
                 
-            verta2 = position+10 #ALL OF THESE ARE NOT RIGHT
-            vertm2 = position-10 
+            verta2 = position+(2*10) #ALL OF THESE ARE NOT RIGHT
+            vertm2 = position-(2*10)
+            if vertm2 < 10 and vert2 <= 0:
+                if str(vertm2) == str(position)[1:2]:
+                    vert_possible_area.append(vertm2)
+                else:
+                    print("something went wrong with vertm2. Coordinate:",vertm2)
             if str(verta2)[1:2] == str(position)[1:2] and verta2<99:
                 vert_possible_area.append(verta2)
             if str(vertm2)[1:2] == str(position)[1:2] and vertm2>0:
@@ -82,14 +94,19 @@ def valid_move_check(click,position):
             horia3 = position+3
             horim3 = position-3
             if str(horia3)[0:1] == str(position)[0:1] and horia3<99:
-                vert_possible_area.append(horia3)
+                hori_possible_area.append(horia3)
             if str(horim3)[0:1] == str(position)[0:1] and horim3>0:
-                vert_possible_area.append(horim3)
+                hori_possible_area.append(horim3)
             else:
                 print("Not in same row or off board")
                 
-            verta3 = position+10 #ALL OF THESE ARE NOT RIGHT
-            vertm3 = position-10 
+            verta3 = position+(3*10) #ALL OF THESE ARE NOT RIGHT
+            vertm3 = position-(3*10)
+            if vertm3 < 10 and vert3 <= 0:
+                if str(vertm3) == str(position)[1:2]:
+                   vert_possible_area.append(vertm3)
+                else:
+                    print("something went wrong with vertm3. Coordinate:",vertm3)
             if str(verta3)[1:2] == str(position)[1:2] and verta3<99:
                 vert_possible_area.append(verta3)
             if str(vertm3)[1:2] == str(position)[1:2] and vertm3>0:
@@ -107,8 +124,13 @@ def valid_move_check(click,position):
             else:
                 print("Not in same row")
                 
-            verta4 = position+10 #ALL OF THESE ARE NOT RIGHT
-            vertm4 = position-10 
+            verta4 = position+(4*10) #ALL OF THESE ARE NOT RIGHT
+            vertm4 = position-(4*10)
+            if vertm4 < 10 and vertm4 >= 0: #05, 5
+                if str(vertm4) == str(position)[1:2]:
+                   vert_possible_area.append(vertm4)
+                else:
+                    print("something went wrong with vertm4. Coordinate:",vertm4)
             if str(verta4)[1:2] == str(position)[1:2] and verta4<99:
                 vert_possible_area.append(verta4)
             if str(vertm4)[1:2] == str(position)[1:2] and vertm4>0:
@@ -132,17 +154,23 @@ def valid_move_check(click,position):
     
     
 
-    return placed
-    return start_pos
-    return end_pos
+    return start_pos, end_pos
+
+start_pos = 0
+start_pos = valid_move_check(click, position)
+print("Returned from function",start_pos)
+end_pos = 0
 
 #start_pos = start_pos
 #end_pos = end_pos
 def place_ships(start_pos, end_pos):
-    pass
+    print("place_ships:",start_pos,end_pos)
     
     
     
     
     
-onbuttonpress(mode,click,position)
+start_pos, end_pos = onbuttonpress(mode,click,position)
+#print(place_ships(start_pos, end_pos))
+
+place_ships(start_pos, end_pos)
